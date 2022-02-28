@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import './App.css';
 import Snake from './components/Snake/Snake';
@@ -23,15 +23,30 @@ function App() {
     else if (event.charCode === 56) {
       setRight(left == 780 ? 0 : left + 20)
     }
-  }
+  };
+
+  const move = () => {
+    if (intervalId) {
+      clearInterval(intervalId)
+      setIntervalId(0)
+      return
+    }
+
+    const newIntervalId = setInterval(() => {      
+      setTop(top => top === 780 ? 0 : top + 1)
+      setRight(right => right === 780 ? 0 : right + 1)
+    },5);
+    setIntervalId(newIntervalId)
+  };
 
 
-  const [top, setTop] = useState(0)
-  const [left, setRight] = useState(0)
+  const [top, setTop] = useState(0);
+  const [left, setRight] = useState(0);
+  const [intervalId, setIntervalId] = useState(0);
 
   return (
     <div className="App">
-      <StyledButton>Press to start</StyledButton>
+      <StyledButton onClick={move}>{intervalId? "Stop" : "Start"}</StyledButton>
       <div id="inner" tabindex="0" onKeyPress={handleAnswerChange}>
         <Canvas >
           <Snake top={top} left={left}></Snake>
