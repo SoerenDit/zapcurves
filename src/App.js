@@ -15,17 +15,28 @@ const Canvas = styled.div`
 `
 
 function App() {
+
+  const handleAnswerChange = (event) => {
+    if (event.charCode === 55) {
+      setTop(top == 780 ? 0 : top + 20)
+    }
+    else if (event.charCode === 56) {
+      setRight(left == 780 ? 0 : left + 20)
+    }
+  }
+
+
   const [top, setTop] = useState(0)
   const [left, setRight] = useState(0)
 
   return (
     <div className="App">
-      <Canvas>
-        <StyledButton onClick={() => setTop(top == 800? 0 : top+40)}>Down</StyledButton>
-        <StyledButton onClick={() => setRight(left == 800? 0 : left+40)}>Right</StyledButton>
-
-        <Snake top={top} left={left}></Snake>
-      </Canvas>
+      <StyledButton>Press to start</StyledButton>
+      <div id="inner" tabindex="0" onKeyPress={handleAnswerChange}>
+        <Canvas >
+          <Snake top={top} left={left}></Snake>
+        </Canvas>
+      </div>
 
     </div>
   );
